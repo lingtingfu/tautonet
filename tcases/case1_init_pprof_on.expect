@@ -1,0 +1,11 @@
+[
+    ["ds&miner",                           "get_latest_DsBlockNum", {}, "r >= 1"],
+    ["ds",                                        "GetNetworkInfo", {}, "len(r.RemotePeerList) >= 11 and len(r.RemotePeerList) <= 15"],
+    ["miner",                                     "GetNetworkInfo", {}, "len(r.RemotePeerList) >= 6 and len(r.RemotePeerList) <= 15 "],
+    ["ds",                                        "GetPeerStatus", {}, "'Ds' in r.crrRoleName and 'viewchange' not in r.crrFSMStatus.lower()"],
+
+    ["okchain0:25010|okchain0:25011", "get_latest_DsBlockNum", {}, "r >= 2"],
+    ["ds&miner",                           "get_latest_TxBlockNum", {}, "r >= 5"],
+    ["okchain0:25010",                      "get_latest_TxBlockNum", {}, "r >= 5"],
+    ["okchain0:25010",                      "GetLatestDsBlock", {}, "r != None"]
+]

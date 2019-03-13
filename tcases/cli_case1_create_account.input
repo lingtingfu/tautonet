@@ -1,0 +1,25 @@
+{
+    "network_desc" : {
+    "sharding_size" : 5,
+    "refresh_interval" : 15,
+    "init_ds_leader_addr" : "okchain0.com:25000",
+    "okchain0.com" : {
+      "ds"     : {"grpc_port_start" : 25000, "grpc_port_end" : 25003},
+      "miner"  : {"grpc_port_start" : 25010, "grpc_port_end" : 25019},
+      "lookup" : {"grpc_port_start" : 25030, "grpc_port_end" : 25031}
+    }
+  },
+  "setup_actions" : [
+    [0, 1, "*",      "cleanup_data_dir",   {}],
+    [3, 1, "*",      "start_okc_peer",     {}],
+    [0, 1, "ds",     "set_primary",        {}],
+    [0, 1, "miner",  "start_pow",          {}]
+  ],
+
+  "wait_after_setup" : 16,
+  "apply_actions" : [
+  ],
+  "wait_after_apply" : 0,
+  "teardown_actions" : [
+  ]
+}

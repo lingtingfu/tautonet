@@ -1,0 +1,6 @@
+[
+  ["ds&miner", "get_latest_DsBlockNum", {}, "r >= 1"],
+  ["ds&miner", "get_latest_TxBlockNum", {}, "r >= 2"],
+  ["ds",       "GetPeerStatus", {}, "'Ds' in r.crrRoleName and 'viewchange' not in r.crrFSMStatus.lower()"],
+  ["ds&miner", "GetAccount", {"hexAddr" : "dB67087f44db19FA02Ef02a1C817bD711D77F461"}, "r.account.Balance == 100"]
+]

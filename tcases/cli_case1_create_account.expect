@@ -1,0 +1,16 @@
+[
+    ["okchain0.com:25010", "CreateAccountWithMoney", {"password" : "dianfengshan", "url" : "http://okchain0.com:26010"}, "r != None", "{'addr1': r['Address']}" ],
+    ["okchain0.com:25010", "CreateAccount",          {"password" : "dianfengshan2", "url" : "http://okchain0.com:26010"}, "r != None", "{'addr2': r['Address']}",  20],
+    [
+        "okchain0.com:25010",
+        "AccountTransferOnline",
+        {"_from" : "`addr1`", "to" : "`addr2`", "nonce" : 0, "password" : "dianfengshan", "amount" : 100000, "url" : "http://okchain0.com:26010", "gasPrice" : 1},
+        "r != None",
+        "{}",
+        30
+    ],
+    ["okchain0.com:25010", "AccountInfo", {"addr" : "`addr1`", "url" : "http://okchain0.com:26010"}, "r != None and r['Balance'] > 100000"],
+    ["okchain0.com:25010", "AccountInfo", {"addr" : "`addr2`", "url" : "http://okchain0.com:26010"}, "r != None and r['Balance'] == 100000"],
+    ["ds&miner",      "GetAccount",  {"hexAddr" : "`addr2`"}, "r.account.Balance == 100000"],
+    ["ds&miner",      "get_latest_DsBlockNum",  {}, "r >= 1"]
+]

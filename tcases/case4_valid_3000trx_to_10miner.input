@@ -1,0 +1,27 @@
+{
+  "network_desc" : {
+    "sharding_size" : 5,
+    "refresh_interval" : 16,
+    "init_ds_leader_addr" : "okchain0:25000",
+    "okchain0" : {
+      "ds"     : {"grpc_port_start" : 25000, "grpc_port_end" : 25004},
+      "miner"  : {"grpc_port_start" : 25010, "grpc_port_end" : 25019},
+      "lookup" : {"grpc_port_start" : 25030, "grpc_port_end" : 25030}
+    }
+  },
+  "setup_actions" : [
+    [0, 1, "*",      "cleanup_data_dir",   {}],
+    [3, 1, "*",      "start_okc_peer",     {}],
+    [0, 1, "ds",     "set_primary",        {}],
+    [0, 1, "miner",  "start_pow",          {}]
+  ],
+  "wait_after_setup" : 45,
+  "apply_actions" : [
+    [0,   1, "miner", "send_transactions", {"hexFrom" : "4ba6fa234186ff7db0c10faa103eecb02a4f26fb", "hexTo" : "0000000000000000000000000000000000000001", "amount" : 100, "start_nonce" : 0,    "count" : 1000}, 1],
+    [0,   1, "miner", "send_transactions", {"hexFrom" : "4ba6fa234186ff7db0c10faa103eecb02a4f26fb", "hexTo" : "0000000000000000000000000000000000000001", "amount" : 100, "start_nonce" : 1000, "count" : 1000}, 1],
+    [120, 1, "miner", "send_transactions", {"hexFrom" : "4ba6fa234186ff7db0c10faa103eecb02a4f26fb", "hexTo" : "0000000000000000000000000000000000000001", "amount" : 100, "start_nonce" : 2000, "count" : 1000}, 1]
+  ],
+  "wait_after_apply" : 120,
+  "teardown_actions" : [
+  ]
+}
