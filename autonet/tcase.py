@@ -102,7 +102,7 @@ class AutoCase(object):
         return sorted(list(nset)), mode
 
     def prepare(self):
-        self._network = TAutoNet(self._network_desc)
+        self._network = TAutoNet(self._network_desc, host_map=self.HOST_MAP)
         self._network.network_refresher.start()
 
     def __apply_simple_actions(self, actions):

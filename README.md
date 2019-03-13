@@ -18,7 +18,7 @@ pip install virtualenv
 virtualenv -p python2.7 ./vevn27
 source ./vevn27/bin/activate
 ```
-- 需要为待登陆机器设置免密登录,根据提示输入密码。DEST_HOST_IP 为 待运行 Peer 的主机IP
+- 需要为待运行测试网络的机器上设置免密登录,根据提示输入密码。DEST_HOST_IP 为 待运行 Peer 的主机IP
 ```
 ssh-copy-id root@$DEST_HOST_IP
 ```
@@ -112,16 +112,16 @@ bash -x ./install.sh
 ```
 
 3. ./tcases/hostnames.json
-测试案例中 *.expect, *.input 中 DomainName 与 IP 的映射表。
+测试案例中 *.expect, *.input 中 DomainName 与 IP 的映射表。如果需要在本地运行测试案例，需要修改 default_user为 ssh 登陆用户。
 ```
 {
     "okchain0"      : "192.168.13.123",
     "okchain1"      : "192.168.13.122",
     "okchain0.com"  : "192.168.13.123",
-    "okchain1.com"  : "192.168.13.122"
+    "okchain1.com"  : "192.168.13.122",
+    "default_user"  : "root"
 }
 ```
-
 
 ### 3. 运行案例与输出
 1. 运行案例

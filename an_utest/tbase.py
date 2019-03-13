@@ -62,7 +62,8 @@ class MyTestCase(unittest.TestCase):
 
     def test_ssh_run_okchain_cmd(self):
         node_name = "utest_node_test"
-        sshclient = OKCSSHClient("192.168.168.22", 22, 26060, 25060, ["192.168.168.22:25001"], ["192.168.168.22:25001"], OKCConst.PEER_ROLE_MINER, node_name, "192.168.168.22:25001")
+        # sshclient = OKCSSHClient("127.0.0.1", 22, 26060, 25060, ["192.168.168.22:25001"], ["192.168.168.22:25001"], OKCConst.PEER_ROLE_MINER, node_name, "192.168.168.22:25001")
+        sshclient = OKCSSHClient("127.0.0.1", 22, 26060, 25060, ["127.0.0.1:25001"], ["127.0.0.1:25001"], OKCConst.PEER_ROLE_MINER, node_name, "127.0.0.1:25001", default_user="lingting.fu")
         print(sshclient.execute_okc_cmd( "export"))
         print(sshclient.kill_okc_peer())
         print(sshclient.start_okc_peer())

@@ -27,9 +27,8 @@ class TAutoNet(object):
         "ShNode",
     ]
 
-    HOST_MAP = {}
 
-    def __init__(self, network_desc={}):
+    def __init__(self, network_desc={}, host_map={}):
         self._network_desc = network_desc
         self.network_refresher = None
         self._ds_node_addrs = None
@@ -41,6 +40,7 @@ class TAutoNet(object):
         self._grpcaddr_2_nodename = {}
         self._grpcaddr_2_okcnode = {}
         self._removed_okcnodes = {}
+        self._HOST_MAP = host_map
         self.load_okc_network()
 
     def get_all_nodes(self):
@@ -60,15 +60,16 @@ class TAutoNet(object):
         host_ip = self.get_alias_hostip(host)
 
         info = {
-            "host": host_ip,
+            "host"          : host_ip,
             "init_peer_role": role,
-            "jrpc_port": grpc_port + 1000,
-            "grpc_port": grpc_port,
+            "jrpc_port"     : grpc_port + 1000,
+            "grpc_port"     : grpc_port,
             "init_ds_leader_addr": self._network_desc["init_ds_leader_addr"],
             "startup_ds_addresses" : self._ds_node_addrs,
             "startup_lookup_addresses" : self._lookup_node_addrs,
             "sharding_size" : self._network_desc.get("sharding_size", 5),
-            "enable_pprof" : int(self._network_desc.get("enable_pprof", False))
+            "enable_pprof"  : int(self._network_desc.get("enable_pprof", False)),
+            "default_user"  : self._HOST_MAP.get("default_user", "root")
         }
         n = BaseNode(**info)
         self._grpcaddr_2_nodename[n.grpc_addr] = n.node_name
@@ -77,25 +78,12 @@ class TAutoNet(object):
         n.get_ssh_client().start_okc_peer()
 
 
-    @classmethod
-    def get_alias_hostip(cls, hostname):
+    def get_alias_hostip(self, hostname):
+        return self._HOST_MAP.get(hostname, hostname)
 
-        if len(cls.HOST_MAP) == 0:
-            from tcase import AutoCase
-            if len(AutoCase.HOST_MAP.keys()) > 0:
-                cls.HOST_MAP = AutoCase.HOST_MAP
-            else:
-                fpath = "/opt/tautonet/tcases/hostnames.json"
-                with open(fpath, "r") as f:
-                    txt = f.read()
-                    cls.HOST_MAP = json.loads(txt)
-
-        return cls.HOST_MAP.get(hostname, hostname)
-
-    @classmethod
-    def get_alias_addr(cls, addr):
+    def get_alias_addr(self, addr):
         host, port = addr.split(":")
-        ip = cls.get_alias_hostip(host)
+        ip = self.get_alias_hostip(host)
         alias_addr = "%s:%s" % (ip, port)
         return alias_addr
 
@@ -145,6 +133,7 @@ class TAutoNet(object):
         for n in all_node_info:
             n["startup_ds_addresses"] = ds_node_addrs
             n["startup_lookup_addresses"] = lookup_node_addrs
+            n["default_user"] = self._HOST_MAP.get("default_user", "root")
             node = BaseNode(**n)
             self._grpcaddr_2_nodename[node.grpc_addr] = node.node_name
             self._grpcaddr_2_okcnode[node.grpc_addr] = node

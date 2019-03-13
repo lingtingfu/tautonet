@@ -24,7 +24,7 @@ if __name__ == '__main__':
         ac.prepare()
         ac.force_clean_env()
         ac.tear_down()
-    else:
+    elif cmd_name == "run":
         if case_name != "all":
             ac = tcase.AutoCase(case_name=case_name)
             result = ac.run()
@@ -53,3 +53,5 @@ if __name__ == '__main__':
                     f.write(summary_text)
 
                 print(summary_text)
+    else:
+        print("%s Not Supported." % (sys.argv))

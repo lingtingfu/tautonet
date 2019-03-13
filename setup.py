@@ -28,6 +28,7 @@ setup(
       scripts=['autonet/tclient.py'],
       data_files=[
             ("/opt/tautonet/logs", []),
+            ("/opt/tautonet/v1/logs/", []),
             ("/opt/tautonet/tcases", ['tcases/sample.expect', 'tcases/sample.input']),
       ]
 )

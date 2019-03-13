@@ -213,7 +213,7 @@ class OKCSSHClient(object):
         env_shell = '''
 #! /bin/bash 
         
-export GOPATH=/root/go
+export GOPATH=\${HOME}/go
 export OKCHAIN_TOP=\${GOPATH}/src/github.com/ok-chain/okchain
 export BUILD_BIN=\${OKCHAIN_TOP}/build/bin
 export PEER_CLIENT_BINARY=\${BUILD_BIN}/okchaind
@@ -235,7 +235,7 @@ export OKCHAIN_PEER_LOOKUPNODEURL='%(startup_lookup_addresses)s'
 export OKCHAIN_PEER_DATADIR=\${OKCHAIN_DEV_DATA_TOP}/%(node_name)s    
 export OKCHAIN_PEER_LOGPATH=\${OKCHAIN_PEER_DATADIR}/%(node_name)s.log
 export OKCHAIN_PEER_ROLEID=%(node_name)s
-export OKCHAIN_PEER_IPCENDPOINT=\${OKCHAIN_TOP}/dev/data/jsonrpc_ipc_endpoint/%(node_name)s.ipc
+export OKCHAIN_PEER_IPCENDPOINT=\${OKCHAIN_DEV_DATA_TOP}/%(node_name)s.ipc
 export OKCHAIN_LEDGER_TXBLOCKCHAIN_GENESISCONF=\${OKCHAIN_TOP}/dev/genesis.json
 export OKCHAIN_LEDGER_BASEDIR=\${OKCHAIN_PEER_DATADIR}/db/
 export OKCHAIN_SHARDING_SIZE=%(sharding_size)d
@@ -395,7 +395,8 @@ class BaseNode(object):
                  startup_ds_addresses=[],
                  startup_lookup_addresses=[],
                  sharding_size=5,
-                 enable_pprof=False):
+                 enable_pprof=False,
+                 default_user="root"):
 
         self.node_name = "okc_%s_g%d_j%d" % (init_peer_role, grpc_port, jrpc_port)
         self.grpc_addr = "%s:%d" % (host, grpc_port)
@@ -409,7 +410,8 @@ class BaseNode(object):
                                             self.node_name,
                                             init_ds_leader_addr,
                                             sharding_size=sharding_size,
-                                            enable_pprof=enable_pprof)
+                                            enable_pprof=enable_pprof,
+                                            default_user=default_user)
         self._init_ds_leader_addr = init_ds_leader_addr
 
     def __repr__(self):
