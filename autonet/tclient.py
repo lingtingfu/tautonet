@@ -11,11 +11,13 @@ import json
 import datetime
 from autonet import tcase
 
+CASE_DIR = "/opt/tautonet/tcases/"
+
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         print "usage.$ tautonet [run|force_clean|run_conf] [case_name|all|conf.json]"
-        print "case_name.expect & case_name.input is supported to be located in /opt/tautonet/tcases/, " \
-              "and the test result sample.out is located in /opt/tautonet/tcases/output"
+        print "case_name.expect & case_name.input is supported to be located in %s, " \
+              "and the test result sample.out is located in %s/output" % (CASE_DIR, CASE_DIR)
         exit()
 
     cmd_name = sys.argv[1]
@@ -34,14 +36,14 @@ if __name__ == '__main__':
         if case_or_conf_name != "all":
             all_cases.append(case_or_conf_name)
         else:
-            d = "/opt/tautonet/tcases/"
+            d = CASE_DIR
             if os.path.isdir(d):
                 l = os.listdir(d)
                 cases = map(lambda x: x.replace(".input", ""), filter(lambda x: x.endswith(".input"), l))
                 for c in cases:
                     all_cases.append(c)
     elif cmd_name == "run_conf":
-        fpath = "/opt/tautonet/tcases/" + case_or_conf_name
+        fpath = CASE_DIR + case_or_conf_name
         with open(fpath, "r") as f:
             txt = f.read()
             all_cases = json.loads(txt)
@@ -63,7 +65,7 @@ if __name__ == '__main__':
         summary_map[c] = {"ALL": len(item_results), "PASS": success_cnt, "FAIL": fail_cnt}
 
     summary_text = json.dumps(summary_map, indent=4)
-    fname = d + os.path + "Summary_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    fname = CASE_DIR + os.path.sep + "Summary_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     with open(fname, "w") as f:
         f.write(summary_text)
 
