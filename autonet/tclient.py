@@ -65,7 +65,7 @@ if __name__ == '__main__':
         summary_map[c] = {"ALL": len(item_results), "PASS": success_cnt, "FAIL": fail_cnt}
 
     summary_text = json.dumps(summary_map, indent=4)
-    fname = CASE_DIR + os.path.sep + "Summary_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    fname = CASE_DIR + "output" + os.path.sep + "Summary_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S") + ".json"
     with open(fname, "w") as f:
         f.write(summary_text)
 
