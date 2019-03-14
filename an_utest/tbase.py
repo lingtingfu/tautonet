@@ -37,12 +37,18 @@ class MyTestCase(unittest.TestCase):
 
         rclient.close()
 
+    def test_rpc_smoke(self):
+        rclient = RpcClient("192.168.27.14", 25015)
+        s = rclient.GetPeerStatus()
+        print(s)
+
     def test_rpc_transaction_smoke(self):
-        rclient = RpcClient("127.0.0.1", 15009)
+        rclient = RpcClient("192.168.27.14", 25015)
 
         accountResp = rclient.GetAccount(MyTestCase.test_from_addr)
         print(accountResp.account)
         print(accountResp.account.Nonce)
+
 
         all_trxs = rclient.GetTransactionsByAccount(MyTestCase.test_from_addr)
         print(all_trxs)

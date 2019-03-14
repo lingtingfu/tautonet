@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     for c, r in result_map.items():
         item_results = r
-        success_cnt = len(filter(lambda x: x[1] == "PASS", item_results.items()))
+        success_cnt = len(filter(lambda x: x[1].get("group_chk_result") == "PASS", item_results.items()))
         fail_cnt = len(item_results) - success_cnt
         summary_map[c] = {"ALL": len(item_results), "PASS": success_cnt, "FAIL": fail_cnt}
 
