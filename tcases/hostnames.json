@@ -1,7 +1,7 @@
 {
-    "okchain0":         "192.168.13.123",
+    "okchain0":         "192.168.27.8",
     "okchain1":         "192.168.13.122",
     "okchain0.com":     "192.168.13.123",
     "okchain1.com":     "192.168.13.122",
-    "default_user":     "root"
+    "default_user":     "lingting.fu"
 }
