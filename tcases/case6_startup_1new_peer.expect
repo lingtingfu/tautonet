@@ -3,5 +3,5 @@
   ["ds&miner", "get_latest_TxBlockNum", {}, "r >= 6"],
   ["ds",              "GetPeerStatus", {}, "'Ds' in r.crrRoleName and 'viewchange' not in r.crrFSMStatus.lower()"],
   ["okchain0.com:25060", "GetAccount", {"hexAddr" : "0000000000000000000000000000000000000001"}, "r.account.Balance == 100"],
-  ["okchain0.com:25060", "GetPeerStatus", {}, "'Sharding' in r.crrRoleName and 'viewchange' not in r.crrFSMStatus"]
+  ["okchain0.com:25060", "GetPeerStatus", {}, "'Shard' in r.crrRoleName and 'viewchange' not in r.crrFSMStatus"]
 ]
