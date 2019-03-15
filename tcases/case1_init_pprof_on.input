@@ -12,9 +12,7 @@
   },
   "setup_actions" : [
     [0, 1, "*",      "cleanup_data_dir",   {}],
-    [30, 1, "*",      "start_okc_peer",     {}],
-    [0, 1, "ds",     "set_primary",        {}],
-    [30, 1, "miner",  "start_pow",          {}]
+    [30, 1, "*",      "start_okc_peer",     {}]
   ],
   "wait_after_setup" : 150,
   "apply_actions" : [

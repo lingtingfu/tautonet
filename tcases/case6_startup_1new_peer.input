@@ -11,9 +11,7 @@
   },
   "setup_actions" : [
     [0,  1, "*",                  "cleanup_data_dir",   {}],
-    [3,  1, "*",                  "start_okc_peer",     {}],
-    [0,  1, "ds",                 "set_primary",        {}],
-    [35, 1, "miner",              "start_pow",         {}],
+    [35,  1, "*",                  "start_okc_peer",     {}],
     [2,  1, "#",                  "add_new_node",      {"host":"okchain0.com", "grpc_port":25060, "role": "miner"}],
     [1,  1, "okchain0.com:25060", "start_pow",        {}]
   ],
